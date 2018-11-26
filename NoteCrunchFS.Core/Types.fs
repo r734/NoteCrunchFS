@@ -9,6 +9,13 @@ type BasicNote =
     | F = 5
     | G = 6
 
+type BasicInterval =
+    | P = 'P'
+    | M = 'M'
+    | m = 'm'
+    | d = 'd'
+    | a = 'a'
+
 type Note =
     {
         baseNote: BasicNote;
