@@ -33,17 +33,17 @@ let toString interval =
         interval.semitones - (interval.basicDistance |> naturalSemitones)
 
     let qualityString (baseQuality, offset) =
-        let unusualQualityString (baseQuality, offset) =
-            "Weird!" // TODO implement oddball cases
-
         match baseQuality, offset with
+        | "M", offset when offset <= -3 -> "(M" + offset.ToString() + ")"
+        | "P", offset when offset <= -2 -> "(P" + offset.ToString() + ")"
         | "M", -2 -> "d"
         | "P", -1 -> "d"
         | "M", -1 -> "m"
         | "P",  0 -> "P"
         | "M",  0 -> "M"
         |  _ ,  1 -> "a"
-        |  _,  _  -> unusualQualityString (baseQuality, offset)
+        | "M", offset when offset > 1 -> "(M+" + offset.ToString() + ")"
+        | "P", offset when offset > 1 -> "(P+" + offset.ToString() + ")"
+        |  _ ,  _ -> "(???)"
 
-    let (^) l r = sprintf "%s%s" l r // http://fssnip.net/92 - concatenate strings
-    qualityString (interval.basicDistance |> baseQuality, interval |> offset) ^ (interval.basicDistance + 1).ToString()
+    sprintf "%s%s" (qualityString (interval.basicDistance |> baseQuality, interval |> offset)) ((interval.basicDistance + 1).ToString())
