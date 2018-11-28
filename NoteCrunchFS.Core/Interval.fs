@@ -12,7 +12,7 @@ let createWithOffset (offset:int) (quality:BasicInterval) (intervalNumber:int) =
 
     let semitonesInInterval quality distance =
         let semitoneFoundation = (distance / 7) * 12
-        match quality, (distance % 7) + 1 with      // (distance % 7) + 1 brings compound interval numbers down to simple, e.g. 13 -> 6
+        match quality, (distance % 7) + 1 with      // (dist%7)+1 brings compound interval numbers down to simple, e.g. 13 -> 6
         | 'P', 1 -> Some semitoneFoundation         // Interval equivalence class P1 (includes P8, P15, etc.)
         | 'P', 4 -> Some (semitoneFoundation + 5)   // Equivalence class P4, and so on
         | 'P', 5 -> Some (semitoneFoundation + 7)
@@ -30,7 +30,8 @@ let createWithOffset (offset:int) (quality:BasicInterval) (intervalNumber:int) =
         | 'M', 7 -> Some (semitoneFoundation + 11)
         | 'M', _ -> None
 
-        | 'd', 1 -> if (semitoneFoundation >= 12) then Some (semitoneFoundation - 1) else None // d1 not valid, but d8, d15, etc. *are* valid
+        | 'd', 1 -> if (semitoneFoundation >= 12) then Some (semitoneFoundation - 1)
+                                                  else None // d1 is not valid, but d8, d15, etc. *are* valid
         | 'd', 2 -> Some semitoneFoundation
         | 'd', 3 -> Some (semitoneFoundation + 2)
         | 'd', 4 -> Some (semitoneFoundation + 4)
@@ -92,5 +93,7 @@ let toString interval =
         |  _ ,  _ -> "(???)"
 
     match interval with
-    | Some interval -> sprintf "%s%s" (qualityString (interval.basicDistance |> baseQuality, interval |> offset)) ((interval.basicDistance + 1).ToString())
+    | Some interval -> sprintf "%s%s" 
+                        (qualityString (interval.basicDistance |> baseQuality, interval |> offset))
+                        ((interval.basicDistance + 1).ToString())
     | None -> sprintf "(invalid interval)"
