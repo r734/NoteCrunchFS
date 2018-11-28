@@ -13,7 +13,7 @@ let createWithOffset (offset:int) (quality:char) (intervalNumber:int) =
 
     let semitonesInInterval quality distance =
         let semitoneFoundation = (distance / 7) * 12
-        match quality, (distance % 7) + 1 with      // (dist%7)+1 brings compound interval numbers down to simple, e.g. 13 -> 6
+        match quality, (distance % 7) + 1 with      // convert potentially compound distance to simple interval num, e.g. 12 -> 6
         | 'P', 1 -> Some semitoneFoundation         // Interval equivalence class P1 (includes P8, P15, etc.)
         | 'P', 4 -> Some (semitoneFoundation + 5)   // Equivalence class P4, and so on
         | 'P', 5 -> Some (semitoneFoundation + 7)
