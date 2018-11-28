@@ -3,5 +3,6 @@ open NoteCrunchFS.Core
 
 [<EntryPoint>]
 let main argv =
-    Interval.rawCreate 0 0 |> printfn "%A"
+    let created = Interval.create 'm' 10
+    printfn "%s" (Interval.toString created)
     0
