@@ -98,3 +98,9 @@ let toString interval =
                         (qualityString (interval.basicDistance |> baseQuality, interval |> offset))
                         ((interval.basicDistance + 1).ToString())
     | None -> sprintf "(invalid interval)"
+
+let (+) (first:Interval Option) (second:Interval Option) =
+    match first, second with
+    | Some fst, Some snd -> Some { basicDistance = fst.basicDistance + snd.basicDistance;
+                                   semitones     = fst.semitones     + snd.semitones      }
+    | _       , _        -> None
