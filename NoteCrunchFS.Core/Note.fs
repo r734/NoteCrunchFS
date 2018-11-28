@@ -1,3 +1,4 @@
+[<AutoOpen>]
 module NoteCrunchFS.Core.Note
 open NoteCrunchFS.Core.Types
 

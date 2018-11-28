@@ -1,4 +1,5 @@
-﻿module NoteCrunchFS.Core.Interval
+﻿[<AutoOpen>]
+module NoteCrunchFS.Core.Interval
 open NoteCrunchFS.Core.Types
 
 let rawCreate distance numSemitones = // TODO should I just take the absolute value instead--to avoid using Option type?
@@ -6,7 +7,7 @@ let rawCreate distance numSemitones = // TODO should I just take the absolute va
     | true, true -> Some { basicDistance = distance; semitones = numSemitones; }
     | _   , _    -> None
 
-let createWithOffset (offset:int) (quality:BasicInterval) (intervalNumber:int) =
+let createWithOffset (offset:int) (quality:char) (intervalNumber:int) =
     let distance = intervalNumber - 1
     if distance < 0 then None else
 
@@ -48,7 +49,7 @@ let createWithOffset (offset:int) (quality:BasicInterval) (intervalNumber:int) =
         | 'a', 7 -> Some (semitoneFoundation + 12)
         |  _ , _ -> None
 
-    match semitonesInInterval (LanguagePrimitives.EnumToValue quality) distance with
+    match semitonesInInterval quality distance with
     | Some result -> if (result + offset < 0) then None 
                      else Some { basicDistance = distance; semitones = result + offset }
     | None -> None
