@@ -18,8 +18,4 @@ module Types =
             octave: int;
         }
 
-    type Interval =
-        {
-            basicDistance: int;
-            semitones: int;
-        }
+

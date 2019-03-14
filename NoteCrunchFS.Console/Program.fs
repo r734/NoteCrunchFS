@@ -4,12 +4,11 @@ open NoteCrunchFS.Core.Types
 
 [<EntryPoint>]
 let main argv =
-    let created = Interval.create 'm' 10
-    let another = Interval.create 'a' 1
-//    printfn "%s" (Interval.toString (created + another))
+    let created = Interval.Create 'm' 10
+    let another = Interval.Create 'a' 1
+//    printfn "%s" ((created + another).ToString)
 
-    let noteA = Note.create BasicNote.E 0 -50
-    let noteB = Note.create BasicNote.D 0 0
+    //let badInterval = Interval.RawCreate -1 0
+    printfn "%s" (string created)
 
-    printfn "%b" (noteA < noteB)
-    0
+    Console.Read()
