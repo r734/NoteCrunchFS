@@ -22,9 +22,9 @@ module Interval =
 
             let semitonesInInterval quality intervalNumber =
                 let semitoneFoundation = ((intervalNumber - 1) / 7) * 12
-                match quality, ((intervalNumber - 1) % 7) + 1 with      // convert potentially compound interval num to simple interval num, e.g. 12 -> 6 TODO re-check math, simplify if possible
-                | 'P', 1 -> semitoneFoundation      // Interval equivalence class P1 (includes P8, P15, etc.)
-                | 'P', 4 -> semitoneFoundation + 5  // Equivalence class P4, and so on
+                match quality, ((intervalNumber - 1) % 7) + 1 with // convert potentially compound interval num to simple interval num, e.g. 12 -> 6
+                | 'P', 1 -> semitoneFoundation     // Interval equivalence class P1 (includes P8, P15, etc.)
+                | 'P', 4 -> semitoneFoundation + 5 // Equivalence class P4, and so on
                 | 'P', 5 -> semitoneFoundation + 7
                 | 'P', _ -> invalidArg "intervalNumber" (sprintf "Invalid interval number given for interval class P (got %i; number mod 7 must equal 1, 4, or 5)" intervalNumber)
 

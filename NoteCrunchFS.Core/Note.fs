@@ -22,11 +22,14 @@ module Note =
         let semitonesFromOctaves numOctaves = numOctaves * 12
         (semitonesFromOctaves note.octave) + note.offset + (basicNoteSemitones note.baseNote)
 
+    let private basicNotesRightOfA0 (note: Note): int =
+        (note.octave * 7) + (int note.baseNote)
+
     let private basicDistance noteA noteB =
-        0
+        abs (basicNotesRightOfA0 noteA - basicNotesRightOfA0 noteB)
 
     let private semitoneDistance noteA noteB =
-        0
+        abs (semitonesRightOfA0 noteA - semitonesRightOfA0 noteB)
 
     let private getHigherNote interval =
         0
