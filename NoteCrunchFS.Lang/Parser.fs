@@ -13,16 +13,25 @@ module Parser =
 
     let pBasicNote = anyOf ['A'..'G']
 
+    let pPosInt32 : Parser<_> =
+        many1 (anyOf ['0'..'9']) |>> (Array.ofList >> System.String >> int32) // TODO this might be refactorable
+
     let pFlats : Parser<_> =
-        many1 (pchar 'b')
+        (many1 (pchar 'b')) |>> (fun list -> int32 (0 - List.length list))
 
     let pSharps : Parser<_> =
-        many1 (pchar '#')    
+        (many1 (pchar '#')) |>> (fun list -> int32 (List.length list))
+
+    let pComplexFlats : Parser<_> =
+        pstring "(b^" >>. pPosInt32 .>> pchar ')' |>> (fun num -> int32 (0 - num))
+
+    let pComplexSharps : Parser<_> =
+        pstring "(#^" >>. pPosInt32 .>> pchar ')'
 
     let pOffset : Parser<_> =
-        many (pFlats <|> pSharps)
+        opt (pFlats <|> pSharps <|> pComplexFlats <|> pComplexSharps)
 
     let pNote : Parser<_> =
         pBasicNote
         .>>. pOffset
-        .>>. pint32
+        .>>. opt pint32

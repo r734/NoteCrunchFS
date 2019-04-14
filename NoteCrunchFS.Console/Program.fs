@@ -11,6 +11,7 @@ let main argv =
     //let badInterval = Interval.RawCreate -1 0
     printfn "%s" (string created)
 
-    
+    Parser.test Parser.pNote "Abbb4"
+    Parser.test Parser.pNote "A(b^4327)-347"
 
     Console.Read()
