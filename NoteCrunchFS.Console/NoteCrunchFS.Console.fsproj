@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NoteCrunchFS.Core\NoteCrunchFS.Core.fsproj" />
+    <ProjectReference Include="..\NoteCrunchFS.Lang\NoteCrunchFS.Lang.fsproj" />
   </ItemGroup>
 
 </Project>

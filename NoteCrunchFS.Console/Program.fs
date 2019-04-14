@@ -1,6 +1,6 @@
 ﻿open System
 open NoteCrunchFS.Core
-open NoteCrunchFS.Core.Types
+open NoteCrunchFS.Lang
 
 [<EntryPoint>]
 let main argv =
@@ -10,5 +10,7 @@ let main argv =
 
     //let badInterval = Interval.RawCreate -1 0
     printfn "%s" (string created)
+
+    
 
     Console.Read()

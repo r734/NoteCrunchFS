@@ -1,15 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Include="Library.fs" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\NoteCrunchFS.Core\NoteCrunchFS.Core.fsproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <Compile Include="Parser.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FParsec" Version="1.0.3" />
+  </ItemGroup>
 </Project>
