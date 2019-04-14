@@ -1,5 +1,6 @@
 ﻿namespace NoteCrunchFS.Lang
 
+open NoteCrunchFS.Core
 open FParsec
 
 module Parser =
@@ -13,20 +14,20 @@ module Parser =
 
     let pBasicNote = anyOf ['A'..'G']
 
-    let pPosInt32 : Parser<_> =
-        many1 (anyOf ['0'..'9']) |>> (Array.ofList >> System.String >> int32) // TODO this might be refactorable
+    let pPosInt : Parser<_> =
+        many1 (anyOf ['0'..'9']) |>> (Array.ofList >> System.String >> int) // TODO this might be refactorable
 
     let pFlats : Parser<_> =
-        (many1 (pchar 'b')) |>> (fun list -> int32 (0 - List.length list))
+        (many1 (pchar 'b')) |>> (fun list -> int (0 - List.length list))
 
     let pSharps : Parser<_> =
-        (many1 (pchar '#')) |>> (fun list -> int32 (List.length list))
+        (many1 (pchar '#')) |>> (fun list -> int (List.length list))
 
     let pComplexFlats : Parser<_> =
-        pstring "(b^" >>. pPosInt32 .>> pchar ')' |>> (fun num -> int32 (0 - num))
+        pstring "(b^" >>. pPosInt .>> pchar ')' |>> (fun num -> int (0 - num))
 
     let pComplexSharps : Parser<_> =
-        pstring "(#^" >>. pPosInt32 .>> pchar ')'
+        pstring "(#^" >>. pPosInt .>> pchar ')'
 
     let pOffset : Parser<_> =
         opt (pFlats <|> pSharps <|> pComplexFlats <|> pComplexSharps)
@@ -34,4 +35,15 @@ module Parser =
     let pNote : Parser<_> =
         pBasicNote
         .>>. pOffset
-        .>>. opt pint32
+        .>>. opt (pint32 |>> int)
+        |>> (fun x ->
+            let baseNote = NoteCrunchFS.Core.Types.charToBasicNote (fst (fst x))
+            let offset = 
+                match (snd (fst x)) with
+                | Some x -> x
+                | None -> 0
+            let octave =
+                match snd x with
+                | Some x -> x
+                | None -> 4 // default octave 4
+            Note.create baseNote offset octave)
